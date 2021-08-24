@@ -1,4 +1,6 @@
 # Python binding for Grasp Pose Generator (pyGPG)
+Grasp Pose Generator is a cpp package that creat grasp candidates for 3D point clouds.
+This package binding it with python.
 
 ## Install
 - Install gpg
@@ -18,7 +20,7 @@ git clone https://github.com/pybind/pybind11
 python setup.py develop
 ```
 
-## example:
+## Example:
 ```
 import pygpg
 points = [put your point cloud here, should be a nX3 numpy array]
