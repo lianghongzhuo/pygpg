@@ -1,0 +1,7 @@
+build/
+cmake-build-debug/
+pybind11
+pygpg.egg-info/
+*.so
+__pycache__/
+.vscode/
