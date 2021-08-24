@@ -15,3 +15,10 @@ cd pygpg
 git clone https://github.com/pybind/pybind11
 python setup.py develop
 ```
+
+## example:
+```
+import pygpg
+points = [put your point cloud here, should be a nX3 numpy array]
+grasps = pygpg.generate_grasps(points)
+```
