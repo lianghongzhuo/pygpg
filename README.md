@@ -1,5 +1,7 @@
 # Python binding for Grasp Pose Generator (pyGPG)
-Grasp Pose Generator is a cpp package that creat grasp candidates for 3D point clouds.
+[![DOI](https://zenodo.org/badge/399418729.svg)](https://zenodo.org/badge/latestdoi/399418729)
+
+[Grasp Pose Generator](https://github.com/atenpas/gpg.git) is a cpp package that creat grasp candidates for 3D point clouds.
 This package binding it with python.
 
 ## Install
