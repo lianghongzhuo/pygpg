@@ -30,7 +30,7 @@ grasps = pygpg.generate_grasps(points)
 ```
 
 ## Known issues:
-- pcl default will add python2.7 path in to the system https://github.com/pybind/pybind11/issues/1637#issuecomment-557609822
+- pcl default will add python2.7 path in to the system: [issues](https://github.com/pybind/pybind11/issues/1637#issuecomment-557609822).
   So we need to hard code witch python to use in cmake file to avoid the pybind binding python2.7 with gpg.
 
 ## Citation
