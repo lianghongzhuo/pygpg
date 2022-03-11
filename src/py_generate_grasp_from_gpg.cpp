@@ -20,8 +20,8 @@ std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc) {
     // Read local hand search parameters.
     hand_search_params.nn_radius_frames_ = 0.01;
     hand_search_params.num_orientations_ = 8;
-    hand_search_params.num_samples_ = 500;
-    hand_search_params.num_threads_ = 4;
+    hand_search_params.num_samples_ = 10;
+    hand_search_params.num_threads_ = 20;
     hand_search_params.rotation_axis_ = 2; // cannot be changed
 
     generator_params.num_samples_ = hand_search_params.num_samples_;
