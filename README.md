@@ -6,16 +6,14 @@ This package binding it with python.
 
 ## Install
 - Install gpg
-```
+```bash
 git clone https://github.com/atenpas/gpg.git
 cd gpg && mkdir build && cd build && cmake .. && make
 sudo make install
 ```
-- Install Python 3.7(optional):
-`sudo apt install python3.7-dev`
 
 - Install pygpg
-```
+```bash
 git clone https://github.com/lianghongzhuo/pygpg.git
 cd pygpg
 git clone https://github.com/pybind/pybind11
@@ -23,9 +21,11 @@ python setup.py develop
 ```
 
 ## Example:
-```
+```python
+import numpy as np
 import pygpg
-points = [put your point cloud here, should be a nX3 numpy array]
+
+points = np.random.rand(3000,3)  # put your point cloud here, should be a nX3 numpy array, here is an example random array
 grasps = pygpg.generate_grasps(points)
 ```
 

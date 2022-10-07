@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.12)
 project(pygpg)
 
 add_compile_options(-std=c++14)
@@ -9,8 +9,7 @@ find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
 # PCL
-find_package(PythonLibs 3)
-include_directories(${PYTHON_INCLUDE_DIRS})
+find_package (Python3 COMPONENTS Interpreter Development)
 find_package(PCL REQUIRED)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
