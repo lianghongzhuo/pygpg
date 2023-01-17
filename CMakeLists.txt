@@ -9,7 +9,7 @@ find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
 # PCL
-find_package (Python3 COMPONENTS Interpreter Development)
+find_package (Python3.10 COMPONENTS Interpreter Development)
 find_package(PCL REQUIRED)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})

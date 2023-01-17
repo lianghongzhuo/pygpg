@@ -3,6 +3,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/eigen.h>
 #include <pybind11/stl.h>
+#include <thread>
 
 namespace py = pybind11;
 
@@ -11,17 +12,17 @@ std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc) {
     HandSearch::Parameters hand_search_params;
 
     // Read hand geometry parameters.
-    hand_search_params.finger_width_ = 0.01;
-    hand_search_params.hand_outer_diameter_ = 0.12;
-    hand_search_params.hand_depth_ = 0.06;
-    hand_search_params.hand_height_ = 0.02;
+    hand_search_params.finger_width_ = 0.03;
+    hand_search_params.hand_outer_diameter_ = 0.218;
+    hand_search_params.hand_depth_ = 0.035;
+    hand_search_params.hand_height_ = 0.03;
     hand_search_params.init_bite_ = 0.01;
 
     // Read local hand search parameters.
     hand_search_params.nn_radius_frames_ = 0.01;
     hand_search_params.num_orientations_ = 8;
-    hand_search_params.num_samples_ = 10;
-    hand_search_params.num_threads_ = 20;
+    hand_search_params.num_samples_ = 20000;
+    hand_search_params.num_threads_ = std::thread::hardware_concurrency();
     hand_search_params.rotation_axis_ = 2; // cannot be changed
 
     generator_params.num_samples_ = hand_search_params.num_samples_;
@@ -44,7 +45,6 @@ std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc) {
     view_points.col(0) = view_point_;
     PointCloudRGBA::Ptr cloud(new PointCloudRGBA);
     pcl::PointXYZRGBA p;
-
     long r = pc.rows();
     for (int i = 0; i < r; ++i) {
         p.x = pc(i, 0);
