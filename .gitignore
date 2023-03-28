@@ -5,3 +5,4 @@ pygpg.egg-info/
 *.so
 __pycache__/
 .vscode/
+dependencies/
