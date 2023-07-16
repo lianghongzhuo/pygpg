@@ -15,8 +15,19 @@ This package binding it with python.
 import numpy as np
 import pygpg
 
-points = np.random.rand(3000,3)  # put your point cloud here, should be a nX3 numpy array, here is an example random array
-grasps = pygpg.generate_grasps(points)
+points = np.random.rand(3000, 3)  # put your point cloud here, should be a nX3 numpy array, here is an example random array
+num_samples = 10000
+show_grasp = False
+grasps = pygpg.generate_grasps(points, num_samples, show_grasp)
+# grasps is a list of grasp objet, to construct a Transformation matrix from each grasp object, use:
+pose_list = []
+for grasp in grasps:
+    pose = np.eye(4)
+    pose[:3, 0] = grasp.get_grasp_approach()
+    pose[:3, 1] = grasp.get_grasp_binormal()
+    pose[:3, 2] = grasp.get_grasp_axis()
+    pose[:3, 3] = grasp.get_grasp_bottom()
+    pose_list.append(pose)
 ```
 
 ## Citation
