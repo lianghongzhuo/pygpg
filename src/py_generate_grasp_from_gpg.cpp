@@ -7,7 +7,7 @@
 
 namespace py = pybind11;
 
-std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc) {
+std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc, const int num_samples, const bool show_grasp) {
     CandidatesGenerator::Parameters generator_params;
     HandSearch::Parameters hand_search_params;
 
@@ -21,7 +21,7 @@ std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc) {
     // Read local hand search parameters.
     hand_search_params.nn_radius_frames_ = 0.01;
     hand_search_params.num_orientations_ = 8;
-    hand_search_params.num_samples_ = 20000;
+    hand_search_params.num_samples_ = num_samples;
     hand_search_params.num_threads_ = std::thread::hardware_concurrency();
     hand_search_params.rotation_axis_ = 2; // cannot be changed
 
@@ -29,7 +29,7 @@ std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc) {
     generator_params.num_threads_ = hand_search_params.num_threads_;
 
     // Read plotting parameters.
-    generator_params.plot_grasps_ = false;
+    generator_params.plot_grasps_ = show_grasp;
     generator_params.plot_normals_ = false;
 
     // Read preprocessing parameters
@@ -42,7 +42,8 @@ std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc) {
     CandidatesGenerator *candidates_generator_;
 
     Eigen::Matrix3Xd view_points(3, 1);
-    view_points.col(0) = view_point_;
+    // view_points.col(0) = view_point_;
+    view_points << 0.0, 0.0, 0.0;
     PointCloudRGBA::Ptr cloud(new PointCloudRGBA);
     pcl::PointXYZRGBA p;
     long r = pc.rows();
@@ -65,11 +66,11 @@ std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc) {
     return grasps;
 }
 
-std::vector<Grasp> generate_grasps(Eigen::MatrixXf &pc) {
+std::vector<Grasp> generate_grasps(Eigen::MatrixXf &pc, int num_samples, bool show_grasp) {
     Eigen::MatrixXf ret;
     // seed the random number generator
     std::srand(std::time(nullptr));
-    std::vector<Grasp> grasps = grasp_generation(pc);
+    std::vector<Grasp> grasps = grasp_generation(pc, num_samples, show_grasp);
     return grasps;
 }
 
