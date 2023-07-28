@@ -5,33 +5,31 @@
 This package binding it with python.
 
 ## Install
-- Install gpg
-```
-git clone https://github.com/atenpas/gpg.git
-cd gpg && mkdir build && cd build && cmake .. && make
-sudo make install
-```
-- Install Python 3.7(optional):
-`sudo apt install python3.7-dev`
 
-- Install pygpg
-```
-git clone https://github.com/lianghongzhuo/pygpg.git
-cd pygpg
-git clone https://github.com/pybind/pybind11
-python setup.py develop
+```bash
+./build_pygpg.sh
 ```
 
 ## Example:
-```
+```python
+import numpy as np
 import pygpg
-points = [put your point cloud here, should be a nX3 numpy array]
-grasps = pygpg.generate_grasps(points)
-```
 
-## Known issues:
-- pcl default will add python2.7 path in to the system: [issues](https://github.com/pybind/pybind11/issues/1637#issuecomment-557609822).
-  So we need to hard code witch python to use in cmake file to avoid the pybind binding python2.7 with gpg.
+points = np.random.rand(3000, 3)  # put your point cloud here, should be a nX3 numpy array, here is an example random array
+num_samples = 10000
+show_grasp = False
+gripper_config_file = "PATH_TO_GRIPPER_CONFIG_FILE"  # see gripper_params.cfg for an example
+grasps = pygpg.generate_grasps(points, num_samples, show_grasp, gripper_config_file)
+# grasps is a list of grasp objet, to construct a Transformation matrix from each grasp object, use:
+pose_list = []
+for grasp in grasps:
+    pose = np.eye(4)
+    pose[:3, 0] = grasp.get_grasp_approach()
+    pose[:3, 1] = grasp.get_grasp_binormal()
+    pose[:3, 2] = grasp.get_grasp_axis()
+    pose[:3, 3] = grasp.get_grasp_bottom()
+    pose_list.append(pose)
+```
 
 ## Citation
 If you found pyGPG useful in your research, please consider citing:
