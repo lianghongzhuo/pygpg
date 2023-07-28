@@ -1,5 +1,6 @@
 #include <gpg/cloud_camera.h>
 #include <gpg/candidates_generator.h>
+#include <gpg/config_file.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/eigen.h>
 #include <pybind11/stl.h>
@@ -7,16 +8,24 @@
 
 namespace py = pybind11;
 
-std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc, const int num_samples, const bool show_grasp) {
+std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc, const int num_samples, const bool show_grasp, const std::string gripper_config_file) {
     CandidatesGenerator::Parameters generator_params;
     HandSearch::Parameters hand_search_params;
 
+    // Read parameters from configuration file.
+    ConfigFile config_file(gripper_config_file);
+    double finger_width = config_file.getValueOfKey<double>("finger_width", 0.01);
+    double hand_outer_diameter = config_file.getValueOfKey<double>("hand_outer_diameter", 0.12);
+    double hand_depth = config_file.getValueOfKey<double>("hand_depth", 0.06);
+    double hand_height = config_file.getValueOfKey<double>("hand_height", 0.02);
+    double init_bite = config_file.getValueOfKey<double>("init_bite", 0.01);
+
     // Read hand geometry parameters.
-    hand_search_params.finger_width_ = 0.03;
-    hand_search_params.hand_outer_diameter_ = 0.218;
-    hand_search_params.hand_depth_ = 0.035;
-    hand_search_params.hand_height_ = 0.03;
-    hand_search_params.init_bite_ = 0.01;
+    hand_search_params.finger_width_ = finger_width;
+    hand_search_params.hand_outer_diameter_ = hand_outer_diameter;
+    hand_search_params.hand_depth_ = hand_depth;
+    hand_search_params.hand_height_ = hand_height;
+    hand_search_params.init_bite_ = init_bite;
 
     // Read local hand search parameters.
     hand_search_params.nn_radius_frames_ = 0.01;
@@ -66,11 +75,11 @@ std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc, const int num_sam
     return grasps;
 }
 
-std::vector<Grasp> generate_grasps(Eigen::MatrixXf &pc, int num_samples, bool show_grasp) {
+std::vector<Grasp> generate_grasps(Eigen::MatrixXf &pc, int num_samples, bool show_grasp, std::string gripper_config_file) {
     Eigen::MatrixXf ret;
     // seed the random number generator
     std::srand(std::time(nullptr));
-    std::vector<Grasp> grasps = grasp_generation(pc, num_samples, show_grasp);
+    std::vector<Grasp> grasps = grasp_generation(pc, num_samples, show_grasp, gripper_config_file);
     return grasps;
 }
 

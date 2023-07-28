@@ -18,7 +18,8 @@ import pygpg
 points = np.random.rand(3000, 3)  # put your point cloud here, should be a nX3 numpy array, here is an example random array
 num_samples = 10000
 show_grasp = False
-grasps = pygpg.generate_grasps(points, num_samples, show_grasp)
+gripper_config_file = "PATH_TO_GRIPPER_CONFIG_FILE"  # see gripper_params.cfg for an example
+grasps = pygpg.generate_grasps(points, num_samples, show_grasp, gripper_config_file)
 # grasps is a list of grasp objet, to construct a Transformation matrix from each grasp object, use:
 pose_list = []
 for grasp in grasps:
