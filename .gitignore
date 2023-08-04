@@ -6,3 +6,4 @@ pygpg.egg-info/
 __pycache__/
 .vscode/
 dependencies/
+.idea/

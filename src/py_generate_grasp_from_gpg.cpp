@@ -19,7 +19,7 @@ std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc, const int num_sam
     double hand_depth = config_file.getValueOfKey<double>("hand_depth", 0.06);
     double hand_height = config_file.getValueOfKey<double>("hand_height", 0.02);
     double init_bite = config_file.getValueOfKey<double>("init_bite", 0.01);
-
+    int max_grasp_num = config_file.getValueOfKey<int>("max_grasp_num", 0);
     // Read hand geometry parameters.
     hand_search_params.finger_width_ = finger_width;
     hand_search_params.hand_outer_diameter_ = hand_outer_diameter;
@@ -36,7 +36,7 @@ std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc, const int num_sam
 
     generator_params.num_samples_ = hand_search_params.num_samples_;
     generator_params.num_threads_ = hand_search_params.num_threads_;
-
+    generator_params.max_grasp_num_ = max_grasp_num;
     // Read plotting parameters.
     generator_params.plot_grasps_ = show_grasp;
     generator_params.plot_normals_ = false;
@@ -51,7 +51,6 @@ std::vector<Grasp> grasp_generation(const Eigen::MatrixXf &pc, const int num_sam
     CandidatesGenerator *candidates_generator_;
 
     Eigen::Matrix3Xd view_points(3, 1);
-    // view_points.col(0) = view_point_;
     view_points << 0.0, 0.0, 0.0;
     PointCloudRGBA::Ptr cloud(new PointCloudRGBA);
     pcl::PointXYZRGBA p;
