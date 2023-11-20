@@ -4,9 +4,10 @@
 [Grasp Pose Generator](https://github.com/atenpas/gpg.git) is a cpp package that creat grasp candidates for 3D point clouds.
 This package binding it with python.
 
-## Install
+## Install in conda environment
 
 ```bash
+conda install cmake pcl boost
 ./build_pygpg.sh
 ```
 
