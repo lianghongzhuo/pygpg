@@ -10,6 +10,7 @@ This package binding it with python.
 ./build_pygpg.sh
 ```
 
+
 ## Example:
 ```python
 import numpy as np
@@ -30,6 +31,13 @@ for grasp in grasps:
     pose[:3, 3] = grasp.get_grasp_bottom()
     pose_list.append(pose)
 ```
+
+## Demo with a simple box:
+```bash
+python example/example.py
+```
+Press `R` to see the result:
+![](data/screenshot_demo.png)
 
 ## Citation
 If you found pyGPG useful in your research, please consider citing:
