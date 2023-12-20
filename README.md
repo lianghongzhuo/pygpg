@@ -7,7 +7,7 @@ This package binding it with python.
 ## Install in conda environment
 
 ```bash
-conda install pcl cmake boost
+conda install -c conda-forge pcl cmake boost
 ./build_pygpg.sh
 ```
 - Note, if the conda failed to find the correct package to install, you can try installing [mamba](https://github.com/conda-forge/miniforge) and using mamba to install the dependencies: `mamba install pcl cmake boost`
